@@ -18,9 +18,7 @@ public class MarksRequester {
 
     public static Marks fetch(PronoteAPI api, String period) throws IOException, RequestException {
         QueryBuilder builder = MarksRequester.getMarks(period);
-        JsonObject marks = api.fetch(builder.build());
-        System.out.println(marks.toString());
-        System.out.println(PronoteAPI.gson.fromJson(marks, Marks.class));
+        JsonObject marks = PronoteAPI.gson.fromJson(api.fetch(builder.build()), JsonObject.class).getAsJsonObject("marks");
         return PronoteAPI.gson.fromJson(marks, Marks.class);
     }
 
