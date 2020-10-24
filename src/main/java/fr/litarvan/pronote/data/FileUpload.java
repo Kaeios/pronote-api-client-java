@@ -14,30 +14,29 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package fr.litarvan.pronote.olddata;
+package fr.litarvan.pronote.data;
 
-public class Absences
-{
-	private int period;
-	private Absence[] absences;
+public class FileUpload implements Data {
 
-	public Absences()
-	{
+	private String name;
+	private String url;
+
+	public FileUpload() {
 	}
 
-	public Absences(int period, Absence[] absences)
-	{
-		this.period = period;
-		this.absences = absences;
+	public FileUpload(String name, String url) {
+		this.name = name;
+		this.url = url;
 	}
 
-	public int getPeriod()
+	public String getName()
 	{
-		return period;
+		return name;
 	}
 
-	public Absence[] getAbsences()
+	public String getUrl()
 	{
-		return absences;
+		return url;
 	}
+
 }

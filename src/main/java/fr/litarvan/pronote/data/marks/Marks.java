@@ -18,21 +18,10 @@ package fr.litarvan.pronote.data.marks;
 
 import fr.litarvan.pronote.data.Data;
 
-public class Marks implements Data
-{
+public class Marks implements Data {
 
 	private MarksSubject[] subjects;
 	private MarksAverages averages;
-
-	public Marks()
-	{
-	}
-
-	public Marks(MarksSubject[] subjects, MarksAverages averages)
-	{
-		this.subjects = subjects;
-		this.averages = averages;
-	}
 
 	public MarksSubject[] getMarksSubjects()
 	{

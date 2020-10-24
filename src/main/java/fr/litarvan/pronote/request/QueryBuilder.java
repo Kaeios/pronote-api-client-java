@@ -82,7 +82,6 @@ public class QueryBuilder {
 
     public String build() {
 
-        System.out.println(sb.toString() + "}}");
         return sb.toString() + "}}";
     }
 

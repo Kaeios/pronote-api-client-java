@@ -18,8 +18,7 @@ package fr.litarvan.pronote.data.marks;
 
 import fr.litarvan.pronote.data.Data;
 
-public class Mark implements Data
-{
+public class Mark implements Data {
 
     private String id;
     private String title;
@@ -31,24 +30,6 @@ public class Mark implements Data
     private float max;
     private long date;
     private boolean isAway;
-
-    public Mark()
-    {
-    }
-
-    public Mark(String id, String title, float value, float scale, float average, float coefficient, float min, float max, long date, boolean isAway)
-    {
-        this.id = id;
-        this.title = title;
-        this.value = value;
-        this.scale = scale;
-        this.average = average;
-        this.coefficient = coefficient;
-        this.min = min;
-        this.max = max;
-        this.date = date;
-        this.isAway = isAway;
-    }
 
     public String getId() {
         return id;

@@ -14,21 +14,28 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-package fr.litarvan.pronote.olddata;
+package fr.litarvan.pronote.data.homeworks;
 
-public class Average
-{
+import com.google.gson.annotations.SerializedName;
+import fr.litarvan.pronote.data.FileUpload;
+
+public class Homework {
+
+    private String description;
+    private String htmlDescription;
     private String subject;
-    private float value;
+    private long givenAt;
+    private long to;
+    private boolean done;
+    private String color;
+    private FileUpload[] files;
 
-    public Average()
-    {
+    public String getDescription() {
+        return description;
     }
 
-    public Average(String subject, float value)
-    {
-        this.subject = subject;
-        this.value = value;
+    public String getHtmlDescription() {
+        return htmlDescription;
     }
 
     public String getSubject()
@@ -36,8 +43,28 @@ public class Average
         return subject;
     }
 
-    public float getValue()
+    public long getGivenAt()
     {
-        return value;
+        return givenAt;
     }
+
+    public long getTo()
+    {
+        return to;
+    }
+
+    public boolean isDone()
+    {
+        return done;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public FileUpload[] getFiles()
+	{
+		return files;
+	}
+
 }

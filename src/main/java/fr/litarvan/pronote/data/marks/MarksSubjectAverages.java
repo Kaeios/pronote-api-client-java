@@ -18,24 +18,12 @@ package fr.litarvan.pronote.data.marks;
 
 import fr.litarvan.pronote.data.Data;
 
-public class MarksSubjectAverages implements Data
-{
+public class MarksSubjectAverages implements Data {
+
     private float student;
     private float studentClass;
     private float min;
     private float max;
-
-    public MarksSubjectAverages()
-    {
-    }
-
-    public MarksSubjectAverages(float student, float studentClass, float min, float max)
-    {
-        this.student = student;
-        this.studentClass = studentClass;
-        this.min = min;
-        this.max = max;
-    }
 
     public float getStudent()
     {

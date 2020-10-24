@@ -16,6 +16,7 @@
  */
 package fr.litarvan.pronote.server.response;
 
+import fr.litarvan.pronote.data.homeworks.Homework;
 import fr.litarvan.pronote.data.informations.Info;
 import fr.litarvan.pronote.data.marks.Marks;
 import fr.litarvan.pronote.olddata.*;

@@ -18,24 +18,12 @@ package fr.litarvan.pronote.data.marks;
 
 import fr.litarvan.pronote.data.Data;
 
-public class MarksSubject implements Data
-{
+public class MarksSubject implements Data {
+
     private String name;
     private MarksSubjectAverages averages;
     private String color;
     private Mark[] marks;
-
-    public MarksSubject()
-    {
-    }
-
-    public MarksSubject(String name, MarksSubjectAverages averages, String color, Mark[] marks)
-    {
-        this.name = name;
-        this.averages = averages;
-        this.color = color;
-        this.marks = marks;
-    }
 
     public String getSubject()
     {
