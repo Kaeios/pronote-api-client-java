@@ -8,7 +8,7 @@ import fr.litarvan.pronote.RequestException;
 import java.io.IOException;
 import java.util.List;
 
-public class Timetable {
+public class Timetable implements Data {
 
     private List<Lesson> timetable;
 

@@ -16,26 +16,24 @@
  */
 package fr.litarvan.pronote.data;
 
-public class SubjectMarks
+import fr.litarvan.pronote.datas.Data;
+
+public class MarksSubject implements Data
 {
     private String name;
-    private float average;
-    private float studentClassAverage;
-    private float maxAverage;
-    private float minAverage;
+    private MarksSubjectAverages averages;
+    private String color;
     private Mark[] marks;
 
-    public SubjectMarks()
+    public MarksSubject()
     {
     }
 
-    public SubjectMarks(String name, float average, float studentClassAverage, float maxAverage, float minAverage, Mark[] marks)
+    public MarksSubject(String name, MarksSubjectAverages averages, String color, Mark[] marks)
     {
         this.name = name;
-        this.average = average;
-        this.studentClassAverage = studentClassAverage;
-        this.maxAverage = maxAverage;
-        this.minAverage = minAverage;
+        this.averages = averages;
+        this.color = color;
         this.marks = marks;
     }
 
@@ -44,28 +42,17 @@ public class SubjectMarks
         return name;
     }
 
-    public float getAverage()
+    public MarksSubjectAverages getAverages()
     {
-        return average;
-    }
-
-    public float getStudentClassAverage()
-    {
-        return studentClassAverage;
-    }
-
-    public float getMaxAverage()
-    {
-        return maxAverage;
-    }
-
-    public float getMinAverage()
-    {
-        return minAverage;
+        return averages;
     }
 
     public Mark[] getMarks()
     {
         return marks;
+    }
+
+    public String getColor() {
+        return color;
     }
 }

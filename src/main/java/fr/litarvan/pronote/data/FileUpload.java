@@ -16,8 +16,10 @@
  */
 package fr.litarvan.pronote.data;
 
-public class FileUpload
-{
+import fr.litarvan.pronote.datas.Data;
+
+public class FileUpload implements Data {
+
 	private String name;
 	private String url;
 

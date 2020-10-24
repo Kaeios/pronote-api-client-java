@@ -128,7 +128,7 @@ public class PronoteAPI
      * @throws IOException If the HTTP connection or I/O failed
      * @throws RequestException If the "error" field is not empty, throw an exception with its content
      */
-    private LoginResponse login(LoginRequest request) throws IOException, RequestException
+    public LoginResponse login(LoginRequest request) throws IOException, RequestException
     {
         URL url = new URL(this.url + (this.url.endsWith("/") ? "" : "/") + "auth/login");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();

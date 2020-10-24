@@ -1,6 +1,6 @@
 package fr.litarvan.pronote.datas;
 
-public class Lesson
+public class Lesson implements Data
 {
     private String subject;
     private String teacher;

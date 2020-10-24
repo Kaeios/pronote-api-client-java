@@ -56,4 +56,5 @@ publishing {
             url "$buildDir/repo"
         }
     }
+
 }

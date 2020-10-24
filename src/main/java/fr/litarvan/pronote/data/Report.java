@@ -20,18 +20,18 @@ public class Report
 {
 	private int period;
 	private ReportSubject[] subjects;
-	private Averages averages;
+	private MarksSubjectAverages marksSubjectAverages;
 	private Comment[] comments;
 
 	public Report()
 	{
 	}
 
-	public Report(int period, ReportSubject[] subjects, Averages averages, Comment[] comments)
+	public Report(int period, ReportSubject[] subjects, MarksSubjectAverages marksSubjectAverages, Comment[] comments)
 	{
 		this.period = period;
 		this.subjects = subjects;
-		this.averages = averages;
+		this.marksSubjectAverages = marksSubjectAverages;
 		this.comments = comments;
 	}
 
@@ -45,9 +45,9 @@ public class Report
 		return subjects;
 	}
 
-	public Averages getAverages()
+	public MarksSubjectAverages getAverages()
 	{
-		return averages;
+		return marksSubjectAverages;
 	}
 
 	public Comment[] getComments()

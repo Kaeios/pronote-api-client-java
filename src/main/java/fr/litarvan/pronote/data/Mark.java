@@ -16,44 +16,42 @@
  */
 package fr.litarvan.pronote.data;
 
-import java.util.Calendar;
+import fr.litarvan.pronote.datas.Data;
 
-public class Mark
+public class Mark implements Data
 {
-    private String subject;
+
+    private String id;
     private String title;
     private float value;
-    private boolean away;
-    private float max;
+    private float scale;
     private float average;
-    private float higher;
-    private float lower;
     private float coefficient;
-    private int period;
-    private long time;
+    private float min;
+    private float max;
+    private long date;
+    private boolean isAway;
 
     public Mark()
     {
     }
 
-    public Mark(String subject, String title, float value, boolean away, float max, float average, float higher, float lower, float coefficient, int period, long time)
+    public Mark(String id, String title, float value, float scale, float average, float coefficient, float min, float max, long date, boolean isAway)
     {
-        this.subject = subject;
+        this.id = id;
         this.title = title;
         this.value = value;
-        this.away = away;
-        this.max = max;
+        this.scale = scale;
         this.average = average;
-        this.higher = higher;
-        this.lower = lower;
         this.coefficient = coefficient;
-        this.period = period;
-        this.time = time;
+        this.min = min;
+        this.max = max;
+        this.date = date;
+        this.isAway = isAway;
     }
 
-    public String getSubject()
-    {
-        return subject;
+    public String getId() {
+        return id;
     }
 
     public String getTitle()
@@ -66,29 +64,8 @@ public class Mark
         return value;
     }
 
-    public boolean isAway()
-    {
-        return away;
-    }
-
-    public float getMax()
-    {
-        return max;
-    }
-
-    public float getAverage()
-    {
-        return average;
-    }
-
-    public float getHigher()
-    {
-        return higher;
-    }
-
-    public float getLower()
-    {
-        return lower;
+    public float getScale() {
+        return scale;
     }
 
     public float getCoefficient()
@@ -96,13 +73,28 @@ public class Mark
         return coefficient;
     }
 
-    public int getPeriod()
+    public float getAverage()
     {
-        return period;
+        return average;
     }
 
-    public long getTime()
+    public float getMin()
     {
-        return time;
+        return min;
     }
+
+    public float getMax()
+    {
+        return max;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public boolean isAway()
+    {
+        return isAway;
+    }
+
 }

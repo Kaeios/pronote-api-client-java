@@ -16,21 +16,25 @@
  */
 package fr.litarvan.pronote.data;
 
-public class Averages
+import fr.litarvan.pronote.datas.Data;
+
+public class MarksSubjectAverages implements Data
 {
     private float student;
     private float studentClass;
-    private int period;
+    private float min;
+    private float max;
 
-    public Averages()
+    public MarksSubjectAverages()
     {
     }
 
-    public Averages(float student, float studentClass, int period)
+    public MarksSubjectAverages(float student, float studentClass, float min, float max)
     {
         this.student = student;
         this.studentClass = studentClass;
-        this.period = period;
+        this.min = min;
+        this.max = max;
     }
 
     public float getStudent()
@@ -43,8 +47,11 @@ public class Averages
         return studentClass;
     }
 
-    public int getPeriod()
-    {
-        return period;
+    public float getMin() {
+        return min;
+    }
+
+    public float getMax() {
+        return max;
     }
 }

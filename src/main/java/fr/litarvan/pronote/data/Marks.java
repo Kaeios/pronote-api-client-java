@@ -16,35 +16,32 @@
  */
 package fr.litarvan.pronote.data;
 
-public class Marks
+import fr.litarvan.pronote.datas.Data;
+
+public class Marks implements Data
 {
-	private int period;
-	private SubjectMarks[] marks;
-	private Averages averages;
+
+	private MarksSubject[] subjects;
+	private MarksAverages averages;
 
 	public Marks()
 	{
 	}
 
-	public Marks(int period, SubjectMarks[] marks, Averages averages)
+	public Marks(MarksSubject[] subjects, MarksAverages averages)
 	{
-		this.period = period;
-		this.marks = marks;
+		this.subjects = subjects;
 		this.averages = averages;
 	}
 
-	public int getPeriod()
+	public MarksSubject[] getMarksSubjects()
 	{
-		return period;
+		return subjects;
 	}
 
-	public SubjectMarks[] getMarks()
-	{
-		return marks;
-	}
-
-	public Averages getAverages()
+	public MarksAverages getAverages()
 	{
 		return averages;
 	}
+
 }
