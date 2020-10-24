@@ -19,7 +19,9 @@ package fr.litarvan.pronote;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import fr.litarvan.pronote.datas.Timetable;
+import fr.litarvan.pronote.server.request.LoginRequest;
+import fr.litarvan.pronote.server.response.LoginResponse;
+import fr.litarvan.pronote.server.request.RequestException;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -28,7 +30,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
