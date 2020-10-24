@@ -74,6 +74,11 @@ public class QueryBuilder {
                 toAdd = "{" + elements(buildString(field.getType().getComponentType())) + "}";
             }
 
+            if (field.getType().isArray() && field.getType().getComponentType().isArray() && Data.class.isAssignableFrom(field.getType().getComponentType().getComponentType())) {
+
+                toAdd = "{" + elements(buildString(field.getType().getComponentType().getComponentType())) + "}";
+            }
+
             elements[i] = field.getName() + toAdd;
         }
 
