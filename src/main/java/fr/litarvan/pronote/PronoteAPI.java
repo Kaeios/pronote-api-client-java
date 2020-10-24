@@ -17,6 +17,9 @@
 package fr.litarvan.pronote;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import fr.litarvan.pronote.datas.Timetable;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -25,6 +28,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * <h2>Pronote API</h2>
@@ -54,9 +60,14 @@ import java.nio.charset.StandardCharsets;
 public class PronoteAPI
 {
     public static final String VERSION = "1.0.0";
-    private static final Gson gson = new Gson();
+    public static final Gson gson = new GsonBuilder()
+            .enableComplexMapKeySerialization()
+            .disableHtmlEscaping()
+            .serializeNulls()
+            .create();
 
     private String url;
+    private String token;
 
     /**
      * @param url URL of the <a href="https://github.com/Litarvan/pronote-api">API server</a>
@@ -64,6 +75,46 @@ public class PronoteAPI
     public PronoteAPI(String url)
     {
         this.url = url;
+    }
+
+    public JsonObject fetch(String graphQlQuery) throws IOException, RequestException
+    {
+        URL url = new URL(this.url + (this.url.endsWith("/") ? "" : "/") + "graphql");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        connection.setDoInput(true);
+        connection.setDoOutput(true);
+
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Token", token);
+
+        try (DataOutputStream out = new DataOutputStream(connection.getOutputStream()))
+        {
+            Map<String, String> request = new HashMap<>();
+
+            request.put("query", graphQlQuery);
+            out.write(gson.toJson(request).getBytes(StandardCharsets.UTF_8));
+        }
+
+        StringBuilder content = new StringBuilder();
+
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)))
+        {
+            String line;
+
+            while ((line = in.readLine()) != null)
+            {
+                content.append(line).append(System.lineSeparator());
+            }
+        }
+
+        connection.disconnect();
+
+        System.out.println(content);
+
+        JsonObject response = gson.fromJson(content.toString(), JsonObject.class).getAsJsonObject("data");
+        return response;
     }
 
     /**
@@ -77,30 +128,9 @@ public class PronoteAPI
      * @throws IOException If the HTTP connection or I/O failed
      * @throws RequestException If the "error" field is not empty, throw an exception with its content
      */
-    public LoginResponse login(LoginRequest request) throws IOException, RequestException
+    private LoginResponse login(LoginRequest request) throws IOException, RequestException
     {
-        return request(request, LoginResponse.class);
-    }
-
-    /**
-     * Fetch the data. If login wasn't done before, login the user first
-     *
-     * @param request The request data
-     *
-     * @return The fetched data (some fields can be empty if not present on the server)
-     *
-     * @throws IOException If the HTTP connection or I/O failed
-     * @throws RequestException If the "error" field is not empty, throw an exception with its content. If this happen on a fetch
-     * request with login having been done, it means there's an issue with the API. Please open an issue on Github.
-     */
-    public FetchResponse fetch(FetchRequest request) throws IOException, RequestException
-    {
-        return request(request, FetchResponse.class);
-    }
-
-    private <R extends Response> R request(Object request, Class<?> responseClass) throws IOException, RequestException
-    {
-        URL url = new URL(this.url);
+        URL url = new URL(this.url + (this.url.endsWith("/") ? "" : "/") + "auth/login");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         connection.setDoInput(true);
@@ -128,12 +158,13 @@ public class PronoteAPI
 
         connection.disconnect();
 
-        R response = (R) gson.fromJson(content.toString(), responseClass);
+        LoginResponse response = gson.fromJson(content.toString(), LoginResponse.class);
         if (response.getError() != null)
         {
             throw new RequestException(new Exception(response.getError()));
         }
 
+        this.token = response.getToken();
         return response;
     }
 

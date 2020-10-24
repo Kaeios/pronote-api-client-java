@@ -18,6 +18,9 @@ package fr.litarvan.pronote;
 
 public class LoginResponse extends Response
 {
+
+    private String token;
+
     public LoginResponse()
     {
     }
@@ -26,4 +29,9 @@ public class LoginResponse extends Response
     {
         this.error = error;
     }
+
+    public String getToken() {
+        return token;
+    }
+
 }
