@@ -10,10 +10,10 @@ import java.io.IOException;
 
 public class TimeTableRequest {
 
-    public static String buildQuery(String of) {
+    public static String buildQuery(String from) {
 
         return new QueryBuilder()
-                .function("timetable", "from", "\"" + of + "\"")
+                .function("timetable", "from", "\"" + from + "\"")
                 .elements(Lesson.class)
                 .build();
     }
