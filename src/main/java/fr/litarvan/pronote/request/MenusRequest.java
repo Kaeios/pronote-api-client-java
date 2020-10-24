@@ -3,8 +3,7 @@ package fr.litarvan.pronote.request;
 import com.google.gson.JsonObject;
 import fr.litarvan.pronote.PronoteAPI;
 import fr.litarvan.pronote.data.menus.MenuDay;
-import fr.litarvan.pronote.data.menus.MenuMealEntry;
-import fr.litarvan.pronote.data.menus.Menus;
+import fr.litarvan.pronote.data.menus.Menu;
 import fr.litarvan.pronote.server.request.RequestException;
 
 import java.io.IOException;
@@ -27,16 +26,16 @@ public class MenusRequest {
                 .build();
     }
 
-    public static Menus fetch(PronoteAPI api, String from) throws IOException, RequestException {
+    public static Menu fetch(PronoteAPI api, String from) throws IOException, RequestException {
 
         JsonObject menus = api.fetch(buildQuery(from));
-        return PronoteAPI.gson.fromJson(menus, Menus.class);
+        return PronoteAPI.gson.fromJson(menus, Menu.class);
     }
 
-    public static Menus fetch(PronoteAPI api, String from, String to) throws IOException, RequestException {
+    public static Menu fetch(PronoteAPI api, String from, String to) throws IOException, RequestException {
 
         JsonObject menus = api.fetch(buildQuery(from, to));
-        return PronoteAPI.gson.fromJson(menus, Menus.class);
+        return PronoteAPI.gson.fromJson(menus, Menu.class);
     }
 
 }
