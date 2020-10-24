@@ -19,7 +19,6 @@ package fr.litarvan.pronote.server.response;
 import fr.litarvan.pronote.data.homeworks.Homework;
 import fr.litarvan.pronote.data.informations.Info;
 import fr.litarvan.pronote.data.marks.Marks;
-import fr.litarvan.pronote.olddata.*;
 
 public class FetchResponse extends Response
 {
@@ -27,37 +26,25 @@ public class FetchResponse extends Response
     private String name;
     private String avatar;
 
-	private Period[] periods;
-
-    private Week[] timetable;
-
     private String[][] menu;
 
     private Marks[] marks;
     private Homework[] homeworks;
-	private Report[] reports;
-	private Absences[] absences;
 
-    private CompleteFileUpload[] files;
     private Info[] infos;
 
     public FetchResponse()
     {
     }
 
-	public FetchResponse(String studentClass, String name, String avatar, Period[] periods, Week[] timetable, String[][] menu, Marks[] marks, Homework[] homeworks, Report[] reports, Absences[] absences, CompleteFileUpload[] files, Info[] infos)
+	public FetchResponse(String studentClass, String name, String avatar, String[][] menu, Marks[] marks, Homework[] homeworks, Info[] infos)
 	{
 		this.studentClass = studentClass;
 		this.name = name;
 		this.avatar = avatar;
-		this.periods = periods;
-		this.timetable = timetable;
 		this.menu = menu;
 		this.marks = marks;
 		this.homeworks = homeworks;
-		this.reports = reports;
-		this.absences = absences;
-		this.files = files;
 		this.infos = infos;
 	}
 
@@ -76,16 +63,6 @@ public class FetchResponse extends Response
         return avatar;
     }
 
-	public Period[] getPeriods()
-	{
-		return periods;
-	}
-
-	public Week[] getTimetable()
-    {
-        return timetable;
-    }
-
     public String[][] getMenu()
     {
         return menu;
@@ -100,21 +77,6 @@ public class FetchResponse extends Response
     {
         return homeworks;
     }
-
-	public Report[] getReports()
-	{
-		return reports;
-	}
-
-	public Absences[] getAbsences()
-	{
-		return absences;
-	}
-
-	public CompleteFileUpload[] getFiles()
-	{
-		return files;
-	}
 
 	public Info[] getInfos()
 	{
