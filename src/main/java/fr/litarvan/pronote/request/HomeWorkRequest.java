@@ -27,16 +27,16 @@ public class HomeWorkRequest {
                 .replace(",to,", ",for,");
     }
 
-    public static Homeworks fetch(PronoteAPI api, String from, String to) throws IOException, RequestException {
-
-        String homeworks = api.fetch(buildQuery(from, to)).toString().replace(",for,", ",to,");
-        return PronoteAPI.gson.fromJson(homeworks, Homeworks.class);
-    }
-
     public static Homeworks fetch(PronoteAPI api, String from) throws IOException, RequestException {
 
         String homeworks = api.fetch(buildQuery(from)).toString().replace(",for,", ",to,");
 
+        return PronoteAPI.gson.fromJson(homeworks, Homeworks.class);
+    }
+
+    public static Homeworks fetch(PronoteAPI api, String from, String to) throws IOException, RequestException {
+
+        String homeworks = api.fetch(buildQuery(from, to)).toString().replace(",for,", ",to,");
         return PronoteAPI.gson.fromJson(homeworks, Homeworks.class);
     }
 
