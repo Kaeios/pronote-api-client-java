@@ -11,11 +11,12 @@ import java.io.IOException;
 public class InfosRequest {
 
     public static Infos fetch(PronoteAPI api) throws IOException, RequestException {
-        QueryBuilder builder =  new QueryBuilder()
+        String query = new QueryBuilder()
                 .value("infos")
-                .elements(Info.class);
+                .elements(Info.class)
+                .build();
 
-        JsonObject infos = api.fetch(builder.build());
+        JsonObject infos = api.fetch(query);
         return PronoteAPI.gson.fromJson(infos, Infos.class);
     }
 

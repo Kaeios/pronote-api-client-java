@@ -9,15 +9,16 @@ import java.io.IOException;
 
 public class MarksRequest {
 
-    public static QueryBuilder getMarks(String period) {
+    public static String builderQuery(String period) {
         return new QueryBuilder()
-                .function("marks", "period", "\""+ period +"\"")
-                .elements(Marks.class);
+                .function("marks", "period", "\"" + period + "\"")
+                .elements(Marks.class)
+                .build();
     }
 
     public static Marks fetch(PronoteAPI api, String period) throws IOException, RequestException {
-        QueryBuilder builder = MarksRequest.getMarks(period);
-        JsonObject marks = PronoteAPI.gson.fromJson(api.fetch(builder.build()), JsonObject.class).getAsJsonObject("marks");
+
+        JsonObject marks = PronoteAPI.gson.fromJson(api.fetch(builderQuery(period)), JsonObject.class).getAsJsonObject("marks");
         return PronoteAPI.gson.fromJson(marks, Marks.class);
     }
 
