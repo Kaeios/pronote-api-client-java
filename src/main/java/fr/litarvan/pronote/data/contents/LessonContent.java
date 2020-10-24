@@ -14,7 +14,7 @@ public class LessonContent implements Data {
     private String description;
 //    private String htmlDescription;
     private FileUpload[] files;
-    private String category;
+//    private String category;
 
     public String getSubject() {
         return subject;
