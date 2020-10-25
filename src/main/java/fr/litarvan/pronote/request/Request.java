@@ -1,11 +1,9 @@
 package fr.litarvan.pronote.request;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import fr.litarvan.pronote.PronoteAPI;
 import fr.litarvan.pronote.request.parameters.ParameterizedRequest;
-import fr.litarvan.pronote.server.request.RequestException;
 
-import java.io.IOException;
 import java.util.*;
 
 public abstract class Request<T> {
@@ -26,23 +24,7 @@ public abstract class Request<T> {
         this.subPart = builder.needSubPart();
     }
 
-    public T fetch(PronoteAPI api, String... parameters) throws IOException, RequestException {
-
-        JsonObject fetch = api.fetch(buildQuery(parameters));
-        String json = fetch.toString();
-
-        if (subPart) {
-            json = fetch.getAsJsonObject(name).toString();
-        }
-
-        for (Replacement replacement : this.replacements) {
-            json = replacement.toApi(json);
-        }
-
-        return PronoteAPI.gson.fromJson(json, returnClass);
-    }
-
-    private String buildQuery(String[] parameters) {
+    public String buildQuery(String... parameters) {
 
         String build = new QueryBuilder()
                 .value(name)
@@ -63,7 +45,7 @@ public abstract class Request<T> {
         return build;
     }
 
-    private String[] buildParameters(String[] parameters) {
+    private String[] buildParameters(String... parameters) {
 
         int i = 0;
         int j = 0;
@@ -90,6 +72,21 @@ public abstract class Request<T> {
         }
 
         return finalParameters;
+    }
+
+    public T buildObject(JsonObject fetch, Gson gson) {
+
+        String json = fetch.toString();
+
+        if (subPart) {
+            json = fetch.getAsJsonObject(name).toString();
+        }
+
+        for (Replacement replacement : this.replacements) {
+            json = replacement.toApi(json);
+        }
+
+        return gson.fromJson(json, returnClass);
     }
 
 }

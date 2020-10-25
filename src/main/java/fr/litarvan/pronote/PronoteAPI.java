@@ -60,6 +60,7 @@ import java.util.Map;
  */
 public class PronoteAPI {
 
+    private static final String DEFAULT_URL = "http://127.0.0.1:21727/";
     public static final String VERSION = "1.0.0";
     public static final Gson gson = new GsonBuilder()
             .enableComplexMapKeySerialization()
@@ -68,14 +69,20 @@ public class PronoteAPI {
             .create();
 
     private final String url;
+    private final Requester requester;
     private String token;
 
     /**
      * @param url URL of the <a href="https://github.com/Litarvan/pronote-api">API server</a>
      */
-    public PronoteAPI(String url)
-    {
+    public PronoteAPI(String url) {
         this.url = url;
+        this.requester = new Requester(this);
+    }
+
+    public PronoteAPI() {
+        this.url = DEFAULT_URL;
+        this.requester = new Requester(this);
     }
 
     /**
@@ -178,6 +185,10 @@ public class PronoteAPI {
     public String getUrl()
     {
         return url;
+    }
+
+    public Requester getRequester() {
+        return requester;
     }
 
 }
