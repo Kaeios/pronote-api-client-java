@@ -11,6 +11,11 @@ public class QueryBuilder {
     public QueryBuilder() {
     }
 
+    public QueryBuilder value(String value) {
+        sb.append(value).append("{");
+        return this;
+    }
+
     public QueryBuilder function(String function, String... params) {
         sb.append(function).append("(");
 
@@ -24,11 +29,6 @@ public class QueryBuilder {
 
         sb.append("){");
 
-        return this;
-    }
-
-    public QueryBuilder value(String value) {
-        sb.append(value).append("{");
         return this;
     }
 

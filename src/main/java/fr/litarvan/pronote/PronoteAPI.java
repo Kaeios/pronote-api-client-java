@@ -58,8 +58,8 @@ import java.util.Map;
  * @version 1.0.0
  * @since 1.0.0
  */
-public class PronoteAPI
-{
+public class PronoteAPI {
+
     public static final String VERSION = "1.0.0";
     public static final Gson gson = new GsonBuilder()
             .enableComplexMapKeySerialization()
@@ -67,7 +67,7 @@ public class PronoteAPI
             .serializeNulls()
             .create();
 
-    private String url;
+    private final String url;
     private String token;
 
     /**
@@ -78,61 +78,17 @@ public class PronoteAPI
         this.url = url;
     }
 
-    public JsonObject fetch(String graphQlQuery) throws IOException, RequestException
-    {
-        URL url = new URL(this.url + (this.url.endsWith("/") ? "" : "/") + "graphql");
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-        connection.setDoInput(true);
-        connection.setDoOutput(true);
-
-        connection.setRequestMethod("POST");
-        connection.setRequestProperty("Content-Type", "application/json");
-        connection.setRequestProperty("Token", token);
-
-        System.out.println("in api fetch, request : " + graphQlQuery);
-
-        try (DataOutputStream out = new DataOutputStream(connection.getOutputStream()))
-        {
-            Map<String, String> request = new HashMap<>();
-
-            request.put("query", graphQlQuery);
-            out.write(gson.toJson(request).getBytes(StandardCharsets.UTF_8));
-        }
-
-        StringBuilder content = new StringBuilder();
-
-        try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)))
-        {
-            String line;
-
-            while ((line = in.readLine()) != null)
-            {
-                content.append(line).append(System.lineSeparator());
-            }
-        }
-
-        connection.disconnect();
-
-        System.out.println("in api fetch, response : " + content);
-
-        JsonObject response = gson.fromJson(content.toString(), JsonObject.class).getAsJsonObject("data");
-        return response;
-    }
-
     /**
      * Login the user (does not fetch any data).
      * This request is optional, doing fetch without "login" will first do login
      *
      * @param request The request data
      *
-     * @return Nothing
-     *
      * @throws IOException If the HTTP connection or I/O failed
      * @throws RequestException If the "error" field is not empty, throw an exception with its content
      */
-    public LoginResponse login(LoginRequest request) throws IOException, RequestException
-    {
+    public void login(LoginRequest request) throws IOException, RequestException {
+
         URL url = new URL(this.url + (this.url.endsWith("/") ? "" : "/") + "auth/login");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -147,6 +103,61 @@ public class PronoteAPI
             out.write(gson.toJson(request).getBytes(StandardCharsets.UTF_8));
         }
 
+        StringBuilder content = readResponse(connection);
+
+        LoginResponse response = gson.fromJson(content.toString(), LoginResponse.class);
+        if (response.getError() != null)
+        {
+            throw new RequestException(new Exception(response.getError()));
+        }
+
+        this.token = response.getToken();
+    }
+
+    /**
+     * Fetch pronote data relative to the graphql query
+     *
+     * @param graphQlQuery The query
+     *
+     * @return Response of the query
+     *
+     * @throws IOException If the HTTP connection or I/O failed
+     * @throws RequestException If the api isn't connected with pronote, by PronoteAPI#login call
+     */
+    public JsonObject fetch(String graphQlQuery) throws IOException, RequestException {
+
+        if (token == null || token.isEmpty()) {
+            throw new RequestException("login required before perform any fetch");
+        }
+
+        URL url = new URL(this.url + (this.url.endsWith("/") ? "" : "/") + "graphql");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        connection.setDoInput(true);
+        connection.setDoOutput(true);
+
+        connection.setRequestMethod("POST");
+        connection.setRequestProperty("Content-Type", "application/json");
+        connection.setRequestProperty("Token", token);
+
+        System.out.println("request : " + graphQlQuery);
+
+        try (DataOutputStream out = new DataOutputStream(connection.getOutputStream()))
+        {
+            Map<String, String> request = new HashMap<>();
+
+            request.put("query", graphQlQuery);
+            out.write(gson.toJson(request).getBytes(StandardCharsets.UTF_8));
+        }
+
+        StringBuilder content = readResponse(connection);
+
+        System.out.println("response : " + content);
+
+        return gson.fromJson(content.toString(), JsonObject.class).getAsJsonObject("data");
+    }
+
+    private StringBuilder readResponse(HttpURLConnection connection) throws IOException {
         StringBuilder content = new StringBuilder();
 
         try (BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8)))
@@ -157,22 +168,16 @@ public class PronoteAPI
             {
                 content.append(line).append(System.lineSeparator());
             }
+
         }
 
         connection.disconnect();
-
-        LoginResponse response = gson.fromJson(content.toString(), LoginResponse.class);
-        if (response.getError() != null)
-        {
-            throw new RequestException(new Exception(response.getError()));
-        }
-
-        this.token = response.getToken();
-        return response;
+        return content;
     }
 
     public String getUrl()
     {
         return url;
     }
+
 }

@@ -1,8 +1,11 @@
-package fr.litarvan.pronote.request;
+package fr.litarvan.pronote.request.parameters;
 
-import java.util.Arrays;
+public class DateRequest implements ParameterizedRequest {
 
-public class DateRequest implements RequestBehavior {
+    @Override
+    public int getPriority() {
+        return 1;
+    }
 
     @Override
     public int getParametersCount() {

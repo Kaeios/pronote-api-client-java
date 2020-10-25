@@ -16,8 +16,8 @@
  */
 package fr.litarvan.pronote.server.request;
 
-public class RequestException extends Exception
-{
+public class RequestException extends Exception {
+
     public RequestException(String message)
     {
         super(message);
@@ -27,4 +27,5 @@ public class RequestException extends Exception
     {
         super(cause);
     }
+
 }

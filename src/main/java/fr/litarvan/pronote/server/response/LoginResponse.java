@@ -21,15 +21,6 @@ public class LoginResponse extends Response
 
     private String token;
 
-    public LoginResponse()
-    {
-    }
-
-    public LoginResponse(String error)
-    {
-        this.error = error;
-    }
-
     public String getToken() {
         return token;
     }

@@ -2,13 +2,20 @@ package fr.litarvan.pronote.request.pronote;
 
 import fr.litarvan.pronote.data.absences.Absences;
 import fr.litarvan.pronote.request.*;
-
-import java.util.Arrays;
+import fr.litarvan.pronote.request.parameters.DateRequest;
+import fr.litarvan.pronote.request.parameters.PeriodRequest;
 
 public class AbsencesRequest extends Request<Absences> {
 
     public AbsencesRequest() {
-        super("absences", Absences.class, Absences.class, Arrays.asList(new PeriodRequest(), new DateRequest()),  true);
+        super(new RequestBuilder<Absences>()
+                .withName("absences")
+                .withSerializedClass(Absences.class)
+                .withReturnClass(Absences.class)
+                .addRequestParameters(new PeriodRequest())
+                .addRequestParameters(new DateRequest())
+                .needSubPart(true)
+        );
     }
 
 }

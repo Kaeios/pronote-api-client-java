@@ -1,6 +1,11 @@
-package fr.litarvan.pronote.request;
+package fr.litarvan.pronote.request.parameters;
 
-public class PeriodRequest implements RequestBehavior {
+public class PeriodRequest implements ParameterizedRequest {
+
+    @Override
+    public int getPriority() {
+        return 0;
+    }
 
     @Override
     public int getParametersCount() {
