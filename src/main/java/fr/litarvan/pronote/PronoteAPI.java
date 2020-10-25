@@ -61,7 +61,7 @@ import java.util.Map;
 public class PronoteAPI {
 
     private static final String DEFAULT_URL = "http://127.0.0.1:21727/";
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "2.0.0";
     public static final Gson gson = new GsonBuilder()
             .enableComplexMapKeySerialization()
             .disableHtmlEscaping()
