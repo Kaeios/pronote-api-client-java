@@ -147,7 +147,7 @@ public class PronoteAPI {
         connection.setRequestProperty("Content-Type", "application/json");
         connection.setRequestProperty("Token", token);
 
-        System.out.println("request : " + graphQlQuery);
+//        System.out.println("request : " + graphQlQuery);
 
         try (DataOutputStream out = new DataOutputStream(connection.getOutputStream()))
         {
@@ -159,7 +159,7 @@ public class PronoteAPI {
 
         StringBuilder content = readResponse(connection);
 
-        System.out.println("response : " + content);
+//        System.out.println("response : " + content);
 
         return gson.fromJson(content.toString(), JsonObject.class).getAsJsonObject("data");
     }
